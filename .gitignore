@@ -1,45 +1,97 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
 
-# IntelliJ related
+
+# iOS
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/ServiceDefinitions.json
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/Runner/GeneratedPluginRegistrant.*
+ios/.symlinks/
+ios/Flutter/App.framework
+ios/Flutter/engine/
+ios/Flutter/ephemeral/
+ios/Runner/GoogleService-Info.plist
+
+# Android
+android/.gradle/
+android/app/*.iml
+android/local.properties
+android/.idea/
+android/captures/
+android/.settings/
+android/.externalNativeBuild
+android/key.properties
+android/app/upload-keystore.jks
+
+# macOS
+macos/Flutter/ephemeral/
+macos/Flutter/GeneratedPluginRegistrant.swift
+macos/Pods/
+macos/.symlinks/
+macos/Flutter/App.framework
+macos/Flutter/Flutter.framework
+macos/Flutter/Generated.xcconfig
+macos/Runner.xcworkspace/
+
+# Web
+lib/generated_plugin_registrant.dart
+
+# Windows
+windows/flutter/ephemeral/
+
+# Linux
+linux/flutter/ephemeral/
+
+# VS Code
+.vscode/
+
+# IntelliJ/Android Studio
 *.iml
 *.ipr
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# Firebase — never commit
+google-services.json
+GoogleService-Info.plist
+lib/firebase_options.dart
 
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
-/coverage/
+# Environment — never commit secrets
+.env
+.env.local
+.env.dev
+.env.staging
+.env.prod
+.env.production
+*.env
+!.env.example
 
-# Symbolication related
-app.*.symbols
+# Keystore — never commit
+*.keystore
+*.jks
 
-# Obfuscation related
+# Sentry
+sentry-debug-meta.properties
 app.*.map.json
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# Coverage & Test results
+**/coverage
+test-results/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.log

@@ -1,7 +1,24 @@
 name: CI
-on: [push]
+
+on:
+  push:
+    branches: [development, main]
+  pull_request:
+    branches: [development, main]
+
 jobs:
-  placeholder:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "CI coming soon"
+      - uses: actions/checkout@v3
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: .fvm/fvm_config.json
+          cache: true
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Analyze
+        run: flutter analyze
+      - name: Run tests
+        run: flutter test

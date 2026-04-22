@@ -1,7 +1,27 @@
 name: Deploy
-on: [push]
+
+on:
+  push:
+    branches: [main]
+
 jobs:
-  placeholder:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Deploy coming soon"
+      - uses: actions/checkout@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version-file: .fvm/fvm_config.json
+          cache: true
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Run tests
+        run: flutter test --coverage
+      - name: Build release APK
+        run: |
+          flutter build appbundle --release \
+            --flavor production \
+            --target lib/main_production.dart \
+            --obfuscate \
+            --split-debug-info=build/debug-info

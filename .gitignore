@@ -14,6 +14,9 @@
 ios/Flutter/Flutter.framework
 ios/Flutter/Flutter.podspec
 ios/Flutter/Generated.xcconfig
+ios/Flutter/Debug.xcconfig
+ios/Flutter/Release.xcconfig
+ios/Podfile
 ios/ServiceDefinitions.json
 ios/Pods/
 ios/Runner.xcworkspace/
@@ -44,15 +47,22 @@ macos/Flutter/App.framework
 macos/Flutter/Flutter.framework
 macos/Flutter/Generated.xcconfig
 macos/Runner.xcworkspace/
+macos/Flutter/Flutter-Debug.xcconfig
+macos/Flutter/Flutter-Release.xcconfig
+macos/Podfile
 
 # Web
 lib/generated_plugin_registrant.dart
 
 # Windows
 windows/flutter/ephemeral/
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugins.cmake
 
 # Linux
 linux/flutter/ephemeral/
+linux/flutter/generated_plugin_registrant.cc
+linux/flutter/generated_plugins.cmake
 
 # VS Code
 .vscode/

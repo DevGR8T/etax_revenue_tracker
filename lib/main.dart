@@ -1,24 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'core/config/flavor_config.dart';
+import 'core/di/injection.dart';
+import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
+
+  // Load environment variables
+  await dotenv.load(fileName: '.env');
+
+  // Hydrated bloc — persists theme across restarts
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getApplicationDocumentsDirectory(),
+  );
+
+  // Firebase — uncomment on Day 12
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+
+  // Register all dependencies
+  await setupGetIt();
+
+  // Sentry error tracking — wraps the entire app
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = dotenv.env['SENTRY_DSN'] ?? '';
+      options.tracesSampleRate = FlavorConfig.isProduction ? 0.2 : 1.0;
+      options.environment = FlavorConfig.flavor.name;
+      // Scrub PII from all error reports
+      options.beforeSend = (event, hint) {
+        return event.copyWith(
+          user: null, //so it never send user data to Sentry
+        );
+      };
+    },
+    appRunner: () => runApp(const EtaxApp()),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class EtaxApp extends StatelessWidget {
+  const EtaxApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Scaffold(
-        body: Center(
-          child: Text('Hello, World!'),
-        ),
-      ),
+    return MaterialApp.router(
+      title: 'eTax Revenue Tracker',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.system,
+      routerConfig: appRouter,
     );
   }
 }

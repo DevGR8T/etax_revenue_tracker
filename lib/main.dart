@@ -9,14 +9,16 @@ import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
 
   // Load environment variables
   await dotenv.load(fileName: '.env');
 
   // Hydrated bloc — persists theme across restarts
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await getApplicationDocumentsDirectory(),
+    storageDirectory: HydratedStorageDirectory(
+      (await getApplicationDocumentsDirectory()).path,
+    ),
   );
 
   // Firebase — uncomment on Day 12
@@ -28,20 +30,16 @@ Future<void> main() async {
   await setupGetIt();
 
   // Sentry error tracking — wraps the entire app
-  await SentryFlutter.init(
-    (options) {
-      options.dsn = dotenv.env['SENTRY_DSN'] ?? '';
-      options.tracesSampleRate = FlavorConfig.isProduction ? 0.2 : 1.0;
-      options.environment = FlavorConfig.flavor.name;
-      // Scrub PII from all error reports
-      options.beforeSend = (event, hint) {
-        return event.copyWith(
-          user: null, //so it never send user data to Sentry
-        );
-      };
-    },
-    appRunner: () => runApp(const EtaxApp()),
-  );
+  await SentryFlutter.init((options) {
+    options.dsn = dotenv.env['SENTRY_DSN'] ?? '';
+    options.tracesSampleRate = FlavorConfig.isProduction ? 0.2 : 1.0;
+    options.environment = FlavorConfig.flavor.name;
+    // Scrub PII from all error reports
+    options.beforeSend = (event, hint) {
+      event.user = null; //so it never sends any user info to Sentry
+      return event;
+    };
+  }, appRunner: () => runApp(const EtaxApp()));
 }
 
 class EtaxApp extends StatelessWidget {

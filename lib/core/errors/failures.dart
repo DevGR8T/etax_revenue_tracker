@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-/// All failures returned from domain layer via Either<Failure, T>.
+/// All failures returned from domain layer via `Either<Failure, T>`.
 abstract class Failure extends Equatable {
   const Failure({required this.message});
   final String message;

@@ -5,7 +5,7 @@ import '../constants/app_colors.dart';
 /// covered by the standard Material ColorScheme.
 ///
 /// Usage in widgets:
-/// Theme.of(context).extension<AppThemeExtension>()!.statusPaid
+/// `Theme.of(context).extension<AppThemeExtension>()!.statusPaid`
 @immutable
 class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
   const AppThemeExtension({

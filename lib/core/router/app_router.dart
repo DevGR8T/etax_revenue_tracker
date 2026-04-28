@@ -10,30 +10,30 @@ final GoRouter appRouter = GoRouter(
   routes: [
     GoRoute(
       path: RouteNames.splash,
-      builder: (_, __) => const _PlaceholderScreen(label: 'Splash'),
+      builder: (_, _) => const _PlaceholderScreen(label: 'Splash'),
     ),
     GoRoute(
       path: RouteNames.login,
-      builder: (_, __) => const _PlaceholderScreen(label: 'Login'),
+      builder: (_, _) => const _PlaceholderScreen(label: 'Login'),
     ),
     GoRoute(
       path: RouteNames.register,
-      builder: (_, __) =>
+      builder: (_, _) =>
           const _PlaceholderScreen(label: 'Register'),
     ),
     GoRoute(
       path: RouteNames.forgotPassword,
-      builder: (_, __) =>
+      builder: (_, _) =>
           const _PlaceholderScreen(label: 'Forgot Password'),
     ),
     GoRoute(
       path: RouteNames.setPassword,
-      builder: (_, __) =>
+      builder: (_, _) =>
           const _PlaceholderScreen(label: 'Set Password'),
     ),
     GoRoute(
       path: RouteNames.payTax,
-      builder: (_, __) =>
+      builder: (_, _) =>
           const _PlaceholderScreen(label: 'Pay Tax'),
     ),
     GoRoute(
@@ -44,21 +44,21 @@ final GoRouter appRouter = GoRouter(
       },
     ),
     ShellRoute(
-      builder: (_, __, child) => _ShellPlaceholder(child: child),
+      builder: (_, _, child) => _ShellPlaceholder(child: child),
       routes: [
         GoRoute(
           path: RouteNames.dashboard,
-          builder: (_, __) =>
+          builder: (_, _) =>
               const _PlaceholderScreen(label: 'Dashboard'),
         ),
         GoRoute(
           path: RouteNames.history,
-          builder: (_, __) =>
+          builder: (_, _) =>
               const _PlaceholderScreen(label: 'History'),
         ),
         GoRoute(
           path: RouteNames.profile,
-          builder: (_, __) =>
+          builder: (_, _) =>
               const _PlaceholderScreen(label: 'Profile'),
         ),
       ],

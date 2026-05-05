@@ -52,7 +52,7 @@ dependencies:
   go_router: ^17.2.2
 
   # Models
-  freezed_annotation: ^3.1.0
+  freezed_annotation: ^2.4.1
   json_annotation: ^4.9.0
 
   # UI
@@ -80,7 +80,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
   build_runner: ^2.4.11
-  freezed: ^3.2.3
+  freezed: ^2.4.7
   json_serializable: ^6.8.0
   injectable_generator: ^2.6.1
   bloc_test: ^10.0.0

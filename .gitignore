@@ -9,6 +9,10 @@
 .pub/
 /build/
 
+# Generated files — never commit
+*.freezed.dart
+*.g.dart
+
 
 # iOS
 ios/Flutter/Flutter.framework

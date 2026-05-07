@@ -7,6 +7,7 @@ abstract final class ErrorMessages {
     return switch (exception) {
       NetworkException() => const NetworkFailure(),
       AuthException(:final message) => AuthFailure(message: message),
+      SessionExpiredException(:final message) => AuthFailure(message: message),
       ServerException(:final message, :final statusCode) =>
         ServerFailure(message: message, statusCode: statusCode),
       CacheException(:final message) => CacheFailure(message: message),

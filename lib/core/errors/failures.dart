@@ -38,3 +38,7 @@ class ValidationFailure extends Failure {
 class SecurityFailure extends Failure {
   const SecurityFailure({required super.message});
 }
+
+class SessionExpiredFailure extends Failure {
+  const SessionExpiredFailure({super.message = 'Session has expired, please login again'});
+}

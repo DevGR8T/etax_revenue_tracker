@@ -47,3 +47,11 @@ class SecurityException implements Exception {
   String toString() => 'SecurityException: $message';
 }
 
+class SessionExpiredException implements Exception {
+  const SessionExpiredException({this.message = 'Session has expired, please login again'});
+  final String message;
+
+  @override
+  String toString() => 'SessionExpiredException: $message';
+}
+

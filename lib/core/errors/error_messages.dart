@@ -3,6 +3,16 @@ import 'failures.dart';
 
 /// Maps exceptions to user-friendly failures.
 abstract final class ErrorMessages {
+    static String fromSupabaseErrorCode(String? errorCode) {
+    return switch (errorCode) {
+      'invalid_credentials' => 'Invalid email or password. Please check and try again.',
+      'user_already_exists' => 'This email is already registered. Please sign in instead.',
+      'weak_password' => 'Password is too weak. Use at least 8 characters with a number and uppercase letter.',
+      'email_not_confirmed' => 'Please verify your email before signing in.',
+      'over_email_send_rate_limit' => 'Too many attempts. Please wait a few minutes and try again.',
+      _ => 'Authentication failed. Please try again.',
+    };
+  }
   static Failure mapExceptionToFailure(Exception exception) {
     return switch (exception) {
       NetworkException() => const NetworkFailure(),
@@ -35,3 +45,6 @@ abstract final class ErrorMessages {
     };
   }
 }
+
+
+

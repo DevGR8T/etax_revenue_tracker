@@ -3,7 +3,7 @@ enum Flavor { dev, staging, production }
 abstract final class FlavorConfig {
   static late Flavor flavor;
   static late String baseUrl;
-  static late String reqresUrl;
+  static late String supabaseUrl;
   static late String appName;
 
   static void initialize(Flavor f) {
@@ -11,15 +11,15 @@ abstract final class FlavorConfig {
     switch (f) {
       case Flavor.dev:
         baseUrl = 'https://dummyjson.com';
-        reqresUrl = 'https://reqres.in';
+        supabaseUrl = 'https://mokomwdrwiizejlibcpl.supabase.co';
         appName = 'eTax Dev';
       case Flavor.staging:
         baseUrl = 'https://dummyjson.com';
-        reqresUrl = 'https://reqres.in';
+        supabaseUrl = 'https://mokomwdrwiizejlibcpl.supabase.co';
         appName = 'eTax Staging';
       case Flavor.production:
         baseUrl = 'https://dummyjson.com';
-        reqresUrl = 'https://reqres.in';
+        supabaseUrl = 'https://mokomwdrwiizejlibcpl.supabase.co';
         appName = 'eTax Revenue Tracker';
     }
   }

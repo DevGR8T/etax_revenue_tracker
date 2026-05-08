@@ -9,6 +9,10 @@
 .pub/
 /build/
 
+# Generated files — never commit
+*.freezed.dart
+*.g.dart
+
 
 # iOS
 ios/Flutter/Flutter.framework
@@ -37,6 +41,7 @@ android/.settings/
 android/.externalNativeBuild
 android/key.properties
 android/app/upload-keystore.jks
+android/build/
 
 # macOS
 macos/Flutter/ephemeral/
@@ -105,3 +110,4 @@ test-results/
 Thumbs.db
 *.swp
 *.log
+

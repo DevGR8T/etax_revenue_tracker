@@ -1,23 +1,34 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
+import 'package:local_auth/local_auth.dart';
+import 'injection.config.dart';
 
 final GetIt getIt = GetIt.instance;
 
-/// Registered all dependencies bottom-up:
-/// SecureStorage → LocalDB → DataSource → Repository → UseCase → BLoC
-///
-/// Security services registered first — they are required by
-/// the network layer before any API call is made.
-Future<void> setupGetIt() async {
-  // ── Security (registered first) ──────────────────────────
-  // DeviceSecurityService, BiometricService 
+@InjectableInit()
+Future<void> setupGetIt() async => getIt.init();
 
-  // ── External ──────────────────────────────────────────────
-  // Dio, FlutterSecureStorage, AppDatabase 
+/// Manual registrations for third-party packages
+/// that injectable cannot auto-discover.
+@module
+abstract class ExternalModule {
+  /// Flutter Secure Storage — encrypted storage for tokens.
+  /// AndroidOptions uses encryptedSharedPreferences for extra security.
+  @lazySingleton
+  FlutterSecureStorage get secureStorage => const FlutterSecureStorage(
+        aOptions: AndroidOptions(),
+        iOptions: IOSOptions(
+          accessibility: KeychainAccessibility.first_unlock_this_device,
+        ),
+      );
 
-  // ── Core Services ─────────────────────────────────────────
-  // AuthService, ConnectivityService, NotificationService 
+  /// Connectivity — network status checks.
+  @lazySingleton
+  Connectivity get connectivity => Connectivity();
 
-  // ── Features ──────────────────────────────────────────────
-  // Auth, Dashboard, Payments, Profile added feature by feature
+  /// LocalAuthentication — biometric auth.
+  @lazySingleton
+  LocalAuthentication get localAuth => LocalAuthentication();
 }
-

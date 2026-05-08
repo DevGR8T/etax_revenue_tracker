@@ -62,7 +62,7 @@ dependencies:
   cached_network_image: ^3.3.1
 
   # Security
-  local_auth: ^3.0.1
+  local_auth: 2.3.0
   safe_device: ^1.1.4
 
   # Utilities

@@ -1,7 +1,6 @@
 import '../constants/app_strings.dart';
 
 /// Validates all user input before it reaches the network layer.
-/// Never trust what the user types.
 /// Returns null if valid, error message String if invalid.
 abstract final class InputValidator {
   static String? email(String? value) {

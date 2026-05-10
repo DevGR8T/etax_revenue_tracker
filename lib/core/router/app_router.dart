@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +18,8 @@ import 'route_names.dart';
 String? _authGuard(BuildContext context, GoRouterState state) {
   final authState = context.read<AuthBloc>().state;
 
-  final isAuthRoute = state.matchedLocation == RouteNames.login ||
+  final isAuthRoute =
+      state.matchedLocation == RouteNames.login ||
       state.matchedLocation == RouteNames.register ||
       state.matchedLocation == RouteNames.forgotPassword ||
       state.matchedLocation == RouteNames.setPassword ||
@@ -29,7 +32,8 @@ String? _authGuard(BuildContext context, GoRouterState state) {
       state.matchedLocation == RouteNames.payTax ||
       state.matchedLocation.startsWith('/history/');
 
-  if (authState is AuthenticatedState && isAuthRoute &&
+  if (authState is AuthenticatedState &&
+      isAuthRoute &&
       state.matchedLocation != RouteNames.splash) {
     return RouteNames.dashboard;
   }
@@ -45,58 +49,40 @@ final GoRouter appRouter = GoRouter(
   initialLocation: RouteNames.splash,
   debugLogDiagnostics: true,
   redirect: _authGuard,
-  refreshListenable: GoRouterRefreshStream(
-    getIt<AuthBloc>().stream,
-  ),
+  refreshListenable: GoRouterRefreshStream(getIt<AuthBloc>().stream),
   routes: [
-    GoRoute(
-      path: RouteNames.splash,
-      builder: (_, _) => const SplashScreen(),
-    ),
-    GoRoute(
-      path: RouteNames.login,
-      builder: (_, _) => const LoginScreen(),
-    ),
+    GoRoute(path: RouteNames.splash, builder: (_, __) => const SplashScreen()),
+    GoRoute(path: RouteNames.login, builder: (_, __) => const LoginScreen()),
     GoRoute(
       path: RouteNames.register,
-      builder: (_, _) => const RegisterScreen(),
+      builder: (_, __) => const RegisterScreen(),
     ),
     GoRoute(
       path: RouteNames.forgotPassword,
-      builder: (_, _) => const ForgotPasswordScreen(),
+      builder: (_, __) => const ForgotPasswordScreen(),
     ),
     GoRoute(
       path: RouteNames.setPassword,
-      builder: (_, _) => const SetPasswordScreen(),
+      builder: (_, __) => const SetPasswordScreen(),
     ),
     GoRoute(
       path: RouteNames.payTax,
-      builder: (_, _) => const _PlaceholderScreen(label: 'Pay Tax'),
-    ),
-    GoRoute(
-      path: '/history/:id',
-      builder: (_, state) {
-        final id = state.pathParameters['id'] ?? '';
-        return _PlaceholderScreen(label: 'Receipt #$id');
-      },
+      builder: (_, __) => const _PlaceholderScreen(label: 'Pay Tax'),
     ),
     ShellRoute(
-      builder: (_, _, child) => _ShellPlaceholder(child: child),
+      builder: (_, __, child) => _ShellPlaceholder(child: child),
       routes: [
         GoRoute(
           path: RouteNames.dashboard,
-          builder: (_, _) =>
-              const _PlaceholderScreen(label: 'Dashboard'),
+          builder: (_, __) => const _PlaceholderScreen(label: 'Dashboard'),
         ),
         GoRoute(
           path: RouteNames.history,
-          builder: (_, _) =>
-              const _PlaceholderScreen(label: 'History'),
+          builder: (_, __) => const _PlaceholderScreen(label: 'History'),
         ),
         GoRoute(
           path: RouteNames.profile,
-          builder: (_, _) =>
-              const _PlaceholderScreen(label: 'Profile'),
+          builder: (_, __) => const _PlaceholderScreen(label: 'Profile'),
         ),
       ],
     ),
@@ -110,7 +96,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
     _subscription = stream.listen((_) => notifyListeners());
   }
 
-  late final dynamic _subscription;
+  late final StreamSubscription<dynamic> _subscription;
 
   @override
   void dispose() {
@@ -128,10 +114,7 @@ class _PlaceholderScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(label)),
       body: Center(
-        child: Text(
-          label,
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
+        child: Text(label, style: Theme.of(context).textTheme.headlineMedium),
       ),
     );
   }

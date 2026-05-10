@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -134,7 +135,7 @@ class SupabaseService {
   static Future<void> initialize() async {
     await Supabase.initialize(
       url: FlavorConfig.supabaseUrl,
-      anonKey: const String.fromEnvironment('SUPABASE_ANON_KEY'),
+      anonKey: dotenv.env['SUPABASE_ANON_KEY'] ?? '',
       authOptions: const FlutterAuthClientOptions(
         authFlowType: AuthFlowType.pkce,
         autoRefreshToken: true,

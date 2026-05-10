@@ -1,3 +1,4 @@
+import 'package:etax_revenue_tracker/core/config/flavor_config.dart';
 import 'package:injectable/injectable.dart';
 import 'package:safe_device/safe_device.dart';
 
@@ -9,6 +10,7 @@ class DeviceSecurityService {
   /// Returns true if device is rooted, jailbroken,
   /// or has developer mode enabled.
   Future<bool> isDeviceCompromised() async {
+    if (FlavorConfig.isDev) return false; // skip check in dev mode
     try {
       final isJailbroken = await SafeDevice.isJailBroken;
       final isDeveloperMode = await SafeDevice.isDevelopmentModeEnable;

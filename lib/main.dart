@@ -1,4 +1,9 @@
+import 'package:etax_revenue_tracker/core/services/supabase_service.dart';
+import 'package:etax_revenue_tracker/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:etax_revenue_tracker/features/auth/presentation/bloc/auth_event.dart';
+import 'package:etax_revenue_tracker/features/auth/presentation/bloc/forgot_password_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,8 +31,15 @@ Future<void> main() async {
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
 
+    // Initialise Supabase before GetIt 
+ 
+  await SupabaseService.initialize();
+
   // Register all dependencies
   await setupGetIt();
+
+  // Fire initial auth check after GetIt is ready
+  getIt<AuthBloc>().add(const CheckAuthStatusEvent());
 
   // Sentry error tracking — wraps the entire app
   await SentryFlutter.init((options) {
@@ -47,13 +59,21 @@ class EtaxApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'eTax Revenue Tracker',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
-      routerConfig: appRouter,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>(create: (_) => getIt<AuthBloc>()),
+        BlocProvider<ForgotPasswordCubit>(
+          create: (_) => getIt<ForgotPasswordCubit>(),
+        ),
+      ],
+      child: MaterialApp.router(
+        title: 'eTax Revenue Tracker',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: ThemeMode.system,
+        routerConfig: appRouter,
+      ),
     );
   }
 }

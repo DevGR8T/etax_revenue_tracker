@@ -16,6 +16,8 @@ import 'package:etax_revenue_tracker/core/network/dio_client.dart' as _i454;
 import 'package:etax_revenue_tracker/core/network/network_info.dart' as _i510;
 import 'package:etax_revenue_tracker/core/security/biometric_service.dart'
     as _i816;
+import 'package:etax_revenue_tracker/core/security/security_service.dart'
+    as _i291;
 import 'package:etax_revenue_tracker/core/services/auth_service.dart' as _i179;
 import 'package:etax_revenue_tracker/core/services/supabase_service.dart'
     as _i269;
@@ -37,6 +39,10 @@ import 'package:etax_revenue_tracker/features/auth/domain/usecases/reset_passwor
     as _i247;
 import 'package:etax_revenue_tracker/features/auth/domain/usecases/send_reset_link_usecase.dart'
     as _i472;
+import 'package:etax_revenue_tracker/features/auth/presentation/bloc/auth_bloc.dart'
+    as _i802;
+import 'package:etax_revenue_tracker/features/auth/presentation/bloc/forgot_password_cubit.dart'
+    as _i765;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -56,6 +62,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i895.Connectivity>(() => externalModule.connectivity);
     gh.lazySingleton<_i152.LocalAuthentication>(() => externalModule.localAuth);
+    gh.lazySingleton<_i291.DeviceSecurityService>(
+      () => _i291.DeviceSecurityService(),
+    );
     gh.lazySingleton<_i816.BiometricService>(
       () => _i816.BiometricService(gh<_i152.LocalAuthentication>()),
     );
@@ -101,6 +110,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.dummyJsonDio(gh<_i179.AuthService>()),
       instanceName: 'dummyjson',
+    );
+    gh.factory<_i765.ForgotPasswordCubit>(
+      () => _i765.ForgotPasswordCubit(gh<_i472.SendResetLinkUseCase>()),
+    );
+    gh.factory<_i802.AuthBloc>(
+      () => _i802.AuthBloc(
+        gh<_i698.LoginUseCase>(),
+        gh<_i759.RegisterUseCase>(),
+        gh<_i457.LogoutUseCase>(),
+        gh<_i956.AuthRepository>(),
+      ),
     );
     return this;
   }

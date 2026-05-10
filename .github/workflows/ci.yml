@@ -17,6 +17,11 @@ jobs:
           flutter-version-file: .fvmrc
           channel: stable
           cache: true
+      - name: Create .env file
+        run: |
+          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" >> .env
+          echo "SENTRY_DSN=${{ secrets.SENTRY_DSN }}" >> .env
+          echo "DUMMY_JSON_BASE_URL=https://dummyjson.com" >> .env     
       - name: Install dependencies
         run: flutter pub get
       - name: Analyze

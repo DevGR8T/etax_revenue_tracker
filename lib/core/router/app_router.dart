@@ -51,39 +51,45 @@ final GoRouter appRouter = GoRouter(
   redirect: _authGuard,
   refreshListenable: GoRouterRefreshStream(getIt<AuthBloc>().stream),
   routes: [
-    GoRoute(path: RouteNames.splash, builder: (_, __) => const SplashScreen()),
-    GoRoute(path: RouteNames.login, builder: (_, __) => const LoginScreen()),
     GoRoute(
-      path: RouteNames.register,
-      builder: (_, __) => const RegisterScreen(),
+  path: RouteNames.splash,
+  builder: (context, _) => const SplashScreen(),
+),
+GoRoute(
+  path: RouteNames.login,
+  builder: (context, _) => const LoginScreen(),
+),
+GoRoute(
+  path: RouteNames.register,
+  builder: (context, _) => const RegisterScreen(),
+),
+GoRoute(
+  path: RouteNames.forgotPassword,
+  builder: (context, _) => const ForgotPasswordScreen(),
+),
+GoRoute(
+  path: RouteNames.setPassword,
+  builder: (context, _) => const SetPasswordScreen(),
+),
+GoRoute(
+  path: RouteNames.payTax,
+  builder: (context, _) => const _PlaceholderScreen(label: 'Pay Tax'),
+),
+ShellRoute(
+  builder: (context, _, child) => _ShellPlaceholder(child: child),
+  routes: [
+    GoRoute(
+      path: RouteNames.dashboard,
+      builder: (context, _) => const _PlaceholderScreen(label: 'Dashboard'),
     ),
     GoRoute(
-      path: RouteNames.forgotPassword,
-      builder: (_, __) => const ForgotPasswordScreen(),
+      path: RouteNames.history,
+      builder: (context, _) => const _PlaceholderScreen(label: 'History'),
     ),
     GoRoute(
-      path: RouteNames.setPassword,
-      builder: (_, __) => const SetPasswordScreen(),
+      path: RouteNames.profile,
+      builder: (context, _) => const _PlaceholderScreen(label: 'Profile'),
     ),
-    GoRoute(
-      path: RouteNames.payTax,
-      builder: (_, __) => const _PlaceholderScreen(label: 'Pay Tax'),
-    ),
-    ShellRoute(
-      builder: (_, __, child) => _ShellPlaceholder(child: child),
-      routes: [
-        GoRoute(
-          path: RouteNames.dashboard,
-          builder: (_, __) => const _PlaceholderScreen(label: 'Dashboard'),
-        ),
-        GoRoute(
-          path: RouteNames.history,
-          builder: (_, __) => const _PlaceholderScreen(label: 'History'),
-        ),
-        GoRoute(
-          path: RouteNames.profile,
-          builder: (_, __) => const _PlaceholderScreen(label: 'Profile'),
-        ),
       ],
     ),
   ],

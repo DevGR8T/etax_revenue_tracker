@@ -38,7 +38,7 @@ class NigerianStatesDropdown extends StatelessWidget {
         ),
         AppSpacing.gapXS,
         DropdownButtonFormField<String>(
-          value: value,
+          initialValue: value,
           validator: validator,
           isExpanded: true,
           decoration: const InputDecoration(),

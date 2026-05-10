@@ -13,7 +13,7 @@ class TermsCheckbox extends StatelessWidget {
   });
 
   final bool value;
-  final void Function(bool?) onChanged;
+  final void Function(bool?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class TermsCheckbox extends StatelessWidget {
         ),
         Expanded(
           child: GestureDetector(
-            onTap: () => onChanged(!value),
+            onTap: onChanged == null ? null : () => onChanged!(!value),
             child: RichText(
               text: TextSpan(
                 style: AppTextStyles.bodySmall.copyWith(

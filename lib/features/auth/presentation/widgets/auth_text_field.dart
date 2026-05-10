@@ -17,6 +17,7 @@ class AuthTextField extends StatelessWidget {
     this.textInputAction,
     this.obscureText = false,
     this.suffixIcon,
+    this.onChanged,
     this.onFieldSubmitted,
     this.enabled = true,
     this.readOnly = false,
@@ -33,6 +34,7 @@ class AuthTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final bool obscureText;
   final Widget? suffixIcon;
+  final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
   final bool enabled;
   final bool readOnly;
@@ -63,6 +65,7 @@ class AuthTextField extends StatelessWidget {
           keyboardType: keyboardType,
           textInputAction: textInputAction,
           obscureText: obscureText,
+          onChanged: onChanged,
           onFieldSubmitted: onFieldSubmitted,
           enabled: enabled,
           readOnly: readOnly,

@@ -68,7 +68,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       final message = ErrorMessages.fromSupabaseErrorCode(e.code);
       throw AuthException(message: message);
     } catch (e) {
-      print('REGISTER ERROR: $e'); 
       if (e is AuthException || e is NetworkException) rethrow;
       throw const ServerException(message: ErrorMessages.registrationFailed);
     }

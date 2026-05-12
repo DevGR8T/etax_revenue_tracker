@@ -43,6 +43,12 @@ import 'package:etax_revenue_tracker/features/auth/presentation/bloc/auth_bloc.d
     as _i802;
 import 'package:etax_revenue_tracker/features/auth/presentation/bloc/forgot_password_cubit.dart'
     as _i765;
+import 'package:etax_revenue_tracker/features/dashboard/domain/repositories/dashboard_repository.dart'
+    as _i519;
+import 'package:etax_revenue_tracker/features/dashboard/domain/usecases/get_dashboard_data_usecase.dart'
+    as _i1025;
+import 'package:etax_revenue_tracker/features/dashboard/domain/usecases/refresh_dashboard_usecase.dart'
+    as _i184;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -73,6 +79,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i510.NetworkInfo>(
       () => _i510.NetworkInfoImpl(gh<_i895.Connectivity>()),
+    );
+    gh.factory<_i184.RefreshDashboardUseCase>(
+      () => _i184.RefreshDashboardUseCase(gh<_i519.DashboardRepository>()),
+    );
+    gh.factory<_i1025.GetDashboardDataUseCase>(
+      () => _i1025.GetDashboardDataUseCase(gh<_i519.DashboardRepository>()),
     );
     gh.lazySingleton<_i1061.AuthRemoteDataSource>(
       () => _i1061.AuthRemoteDataSourceImpl(

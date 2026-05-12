@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 /// Represents a single payment row in the recent transactions section.
-/// Derived from DummyJSON product data.
+/// Derived from DummyJSON product data — confirmed in Postman Day 2.
 class RecentPaymentEntity extends Equatable {
   const RecentPaymentEntity({
     required this.id,
@@ -13,6 +13,8 @@ class RecentPaymentEntity extends Equatable {
     required this.status,
     required this.statusLabel,
     required this.receiptNumber,
+    this.levyType,
+    this.description,
   });
 
   final int id;
@@ -20,7 +22,7 @@ class RecentPaymentEntity extends Equatable {
   /// Maps from product.title
   final String levyName;
 
-  /// Maps from product.price
+  /// Maps from product.price — double confirmed in Postman
   final double amount;
 
   /// Formatted as ₦4,500.00
@@ -39,6 +41,12 @@ class RecentPaymentEntity extends Equatable {
 
   /// RCP-2024-00001
   final String receiptNumber;
+
+  /// Maps from product.category
+  final String? levyType;
+
+  /// Maps from product.description
+  final String? description;
 
   @override
   List<Object?> get props => [id, levyName, amount, status];

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:etax_revenue_tracker/features/dashboard/domain/entities/recent_payment_entity.dart';
 
+/// Represents the complete dashboard data.
 /// Pure Dart — no JSON, no Flutter, no Dio.
 /// Contains citizen stats and recent payment list.
 class DashboardEntity extends Equatable {
@@ -18,6 +19,7 @@ class DashboardEntity extends Equatable {
 
   /// Tax Identification Number — generated from user id.
   /// Format: NG-XXXXXXXX
+  /// NOTE: Supabase userId is a UUID String — we hash it to 8 digits.
   final String tin;
 
   /// Sum of all paid payment amounts formatted as double.

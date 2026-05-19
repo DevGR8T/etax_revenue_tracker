@@ -6,19 +6,19 @@ part 'recent_payment_model.freezed.dart';
 part 'recent_payment_model.g.dart';
 
 /// Maps the DummyJSON GET /products response.
-/// Only fields we use — documented in Postman Day 2.
+/// Only fields we use 
 @freezed
 class RecentPaymentModel with _$RecentPaymentModel {
   const factory RecentPaymentModel({
     required int id,
     required String title,
 
-    /// price is double not int — confirmed in Postman Day 2
+    /// price is double  
     required double price,
     required String category,
     required String description,
 
-    /// Can be null — confirmed in Postman Day 2.
+    /// Can be null —
     String? thumbnail,
 
     /// Nested meta object containing createdAt timestamp.
@@ -44,7 +44,7 @@ class ProductMetaModel with _$ProductMetaModel {
 /// All derivation logic lives here — not in the repository.
 extension RecentPaymentModelX on RecentPaymentModel {
   RecentPaymentEntity toEntity() {
-    // Derive payment status from id as per spec — confirmed Day 2
+    // Derive payment status from id as per spec 
     final status = switch (id % 3) {
       0 => PaymentStatus.paid,
       1 => PaymentStatus.pending,

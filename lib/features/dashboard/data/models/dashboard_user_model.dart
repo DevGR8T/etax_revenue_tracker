@@ -15,7 +15,7 @@ class DashboardUserModel with _$DashboardUserModel {
     required String email,
     required String phone,
 
-    /// Can be null — confirmed in Postman Day 2.
+    /// Can be null 
     String? image,
   }) = _DashboardUserModel;
 

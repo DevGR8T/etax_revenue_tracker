@@ -24,6 +24,8 @@ jobs:
           echo "DUMMY_JSON_BASE_URL=https://dummyjson.com" >> .env     
       - name: Install dependencies
         run: flutter pub get
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
       - name: Analyze
         run: flutter analyze
       - name: Run tests

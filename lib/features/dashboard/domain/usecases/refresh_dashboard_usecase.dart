@@ -6,18 +6,17 @@ import '../../../../core/usecases/usecase.dart';
 import '../entities/dashboard_entity.dart';
 import '../repositories/dashboard_repository.dart';
 
-/// Fetches complete dashboard data.
-/// One class. One purpose.
-/// Calls repository interface — never the implementation.
+/// Forces a fresh API fetch — ignores any cached data.
+/// Triggered by pull-to-refresh on Dashboard screen.
 @injectable
-class GetDashboardDataUseCase
+class RefreshDashboardUseCase
     extends UseCase<DashboardEntity, NoParams> {
-  const GetDashboardDataUseCase(this._repository);
+  const RefreshDashboardUseCase(this._repository);
 
   final DashboardRepository _repository;
 
   @override
   Future<Either<Failure, DashboardEntity>> call(NoParams params) {
-    return _repository.getDashboardData();
+    return _repository.refreshDashboardData();
   }
 }

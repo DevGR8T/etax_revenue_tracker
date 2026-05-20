@@ -2,6 +2,7 @@ import 'package:etax_revenue_tracker/core/services/supabase_service.dart';
 import 'package:etax_revenue_tracker/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:etax_revenue_tracker/features/auth/presentation/bloc/auth_event.dart';
 import 'package:etax_revenue_tracker/features/auth/presentation/bloc/forgot_password_cubit.dart';
+import 'package:etax_revenue_tracker/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -31,8 +32,8 @@ Future<void> main() async {
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
 
-    // Initialise Supabase before GetIt 
- 
+  // Initialise Supabase before GetIt
+
   await SupabaseService.initialize();
 
   // Register all dependencies
@@ -65,6 +66,7 @@ class EtaxApp extends StatelessWidget {
         BlocProvider<ForgotPasswordCubit>(
           create: (_) => getIt<ForgotPasswordCubit>(),
         ),
+        BlocProvider<DashboardBloc>(create: (_) => getIt<DashboardBloc>()),
       ],
       child: MaterialApp.router(
         title: 'eTax Revenue Tracker',

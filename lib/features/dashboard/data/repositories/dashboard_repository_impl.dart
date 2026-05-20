@@ -17,7 +17,7 @@ import '../models/recent_payment_model.dart';
 ///
 /// SUPABASE NOTE:
 /// getUserId() now returns a UUID String from Supabase —
-/// not an int like ReqRes. We use ReceiptGenerator.tinFromUuid()
+/// not an int  We use ReceiptGenerator.tinFromUuid()
 /// to generate a stable 8-digit TIN from the UUID.
 @LazySingleton(as: DashboardRepository)
 class DashboardRepositoryImpl implements DashboardRepository {

@@ -114,7 +114,7 @@ class PaymentRemoteDataSourceImpl implements PaymentRemoteDataSource {
   }
 
   /// Converts DioException to typed exceptions.
-  /// DummyJSON uses "message" not "error" — confirmed in Postman Day 2.
+  /// DummyJSON uses "message" not "error" — confirmed in Postman
   Never _handleDioException(DioException e) {
     if (e.type == DioExceptionType.connectionError ||
         e.type == DioExceptionType.connectionTimeout) {

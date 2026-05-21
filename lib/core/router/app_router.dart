@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:etax_revenue_tracker/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:etax_revenue_tracker/features/payments/presentation/screens/payment_history_screen.dart';
 import 'package:etax_revenue_tracker/shared/widgets/main_shell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,7 +88,7 @@ ShellRoute(
     GoRoute(
       path: RouteNames.history,
       builder: (context, _) =>
-          const _PlaceholderScreen(label: 'History'),
+          const PaymentHistoryScreen(),
     ),
     GoRoute(
       path: RouteNames.profile,

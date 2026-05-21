@@ -55,6 +55,10 @@ import 'package:etax_revenue_tracker/features/dashboard/domain/usecases/refresh_
     as _i184;
 import 'package:etax_revenue_tracker/features/dashboard/presentation/bloc/dashboard_bloc.dart'
     as _i959;
+import 'package:etax_revenue_tracker/features/payments/data/datasources/payment_remote_datasource.dart'
+    as _i96;
+import 'package:etax_revenue_tracker/features/payments/data/repositories/payment_repository_impl.dart'
+    as _i443;
 import 'package:etax_revenue_tracker/features/payments/domain/repositories/payment_repository.dart'
     as _i4;
 import 'package:etax_revenue_tracker/features/payments/domain/usecases/create_payment_usecase.dart'
@@ -65,6 +69,8 @@ import 'package:etax_revenue_tracker/features/payments/domain/usecases/get_payme
     as _i130;
 import 'package:etax_revenue_tracker/features/payments/domain/usecases/search_payments_usecase.dart'
     as _i930;
+import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment_history_bloc.dart'
+    as _i982;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -95,18 +101,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i510.NetworkInfo>(
       () => _i510.NetworkInfoImpl(gh<_i895.Connectivity>()),
-    );
-    gh.factory<_i930.SearchPaymentsUseCase>(
-      () => _i930.SearchPaymentsUseCase(gh<_i4.PaymentRepository>()),
-    );
-    gh.factory<_i917.GetPaymentDetailUseCase>(
-      () => _i917.GetPaymentDetailUseCase(gh<_i4.PaymentRepository>()),
-    );
-    gh.factory<_i130.GetPaymentsUseCase>(
-      () => _i130.GetPaymentsUseCase(gh<_i4.PaymentRepository>()),
-    );
-    gh.factory<_i608.CreatePaymentUseCase>(
-      () => _i608.CreatePaymentUseCase(gh<_i4.PaymentRepository>()),
     );
     gh.lazySingleton<_i1061.AuthRemoteDataSource>(
       () => _i1061.AuthRemoteDataSourceImpl(
@@ -154,6 +148,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i510.NetworkInfo>(),
       ),
     );
+    gh.lazySingleton<_i96.PaymentRemoteDataSource>(
+      () => _i96.PaymentRemoteDataSourceImpl(
+        gh<_i361.Dio>(instanceName: 'dummyjson'),
+        gh<_i510.NetworkInfo>(),
+      ),
+    );
     gh.factory<_i802.AuthBloc>(
       () => _i802.AuthBloc(
         gh<_i698.LoginUseCase>(),
@@ -168,16 +168,40 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i269.SupabaseService>(),
       ),
     );
+    gh.lazySingleton<_i4.PaymentRepository>(
+      () => _i443.PaymentRepositoryImpl(
+        gh<_i96.PaymentRemoteDataSource>(),
+        gh<_i269.SupabaseService>(),
+      ),
+    );
     gh.factory<_i184.RefreshDashboardUseCase>(
       () => _i184.RefreshDashboardUseCase(gh<_i519.DashboardRepository>()),
     );
     gh.factory<_i1025.GetDashboardDataUseCase>(
       () => _i1025.GetDashboardDataUseCase(gh<_i519.DashboardRepository>()),
     );
+    gh.factory<_i930.SearchPaymentsUseCase>(
+      () => _i930.SearchPaymentsUseCase(gh<_i4.PaymentRepository>()),
+    );
+    gh.factory<_i917.GetPaymentDetailUseCase>(
+      () => _i917.GetPaymentDetailUseCase(gh<_i4.PaymentRepository>()),
+    );
+    gh.factory<_i130.GetPaymentsUseCase>(
+      () => _i130.GetPaymentsUseCase(gh<_i4.PaymentRepository>()),
+    );
+    gh.factory<_i608.CreatePaymentUseCase>(
+      () => _i608.CreatePaymentUseCase(gh<_i4.PaymentRepository>()),
+    );
     gh.factory<_i959.DashboardBloc>(
       () => _i959.DashboardBloc(
         gh<_i1025.GetDashboardDataUseCase>(),
         gh<_i184.RefreshDashboardUseCase>(),
+      ),
+    );
+    gh.factory<_i982.PaymentHistoryBloc>(
+      () => _i982.PaymentHistoryBloc(
+        gh<_i130.GetPaymentsUseCase>(),
+        gh<_i930.SearchPaymentsUseCase>(),
       ),
     );
     return this;

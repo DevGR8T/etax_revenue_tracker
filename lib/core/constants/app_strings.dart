@@ -51,6 +51,7 @@ abstract final class AppStrings {
   // ── Payments ───────────────────────────────────────────────
   static const String paymentHistory = 'Payment history';
   static const String searchPayments = 'Search payments...';
+  static const String noSearchResults = 'No results found';
   static const String allPayments = 'All';
   static const String paidPayments = 'Paid';
   static const String pendingPayments = 'Pending';

@@ -146,7 +146,7 @@ class _PaymentHistoryViewState extends State<_PaymentHistoryView> {
                       child: ListView.separated(
                         controller: _scrollController,
                         itemCount: filteredPayments.length,
-                        separatorBuilder: (_, __) => const Divider(height: 1),
+                        separatorBuilder: (_, _) => const Divider(height: 1),
                         itemBuilder: (_, index) => PaymentListItem(
                           payment: filteredPayments[index],
                           onTap: () => context.go(
@@ -167,7 +167,7 @@ class _PaymentHistoryViewState extends State<_PaymentHistoryView> {
                           child: ListView.separated(
                             controller: _scrollController,
                             itemCount: filteredPayments.length,
-                            separatorBuilder: (_, __) =>
+                            separatorBuilder: (_, _) =>
                                 const Divider(height: 1),
                             itemBuilder: (_, index) => PaymentListItem(
                               payment: filteredPayments[index],
@@ -195,7 +195,7 @@ class _PaymentHistoryViewState extends State<_PaymentHistoryView> {
                     ListView.separated(
                       controller: _scrollController,
                       itemCount: filteredPayments.length + 1,
-                      separatorBuilder: (_, __) => const Divider(height: 1),
+                      separatorBuilder: (_, _) => const Divider(height: 1),
                       itemBuilder: (_, index) {
                         if (index == filteredPayments.length) {
                           return Padding(

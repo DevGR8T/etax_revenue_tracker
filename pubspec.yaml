@@ -17,6 +17,8 @@ dependencies:
   flutter_bloc: ^9.1.1
   equatable: ^2.0.5
   hydrated_bloc: ^11.0.0
+  bloc_concurrency: ^0.3.0
+  rxdart: ^0.28.0
 
   # Network
   dio: ^5.4.3+1

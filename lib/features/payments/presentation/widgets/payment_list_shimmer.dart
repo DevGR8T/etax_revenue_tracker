@@ -21,15 +21,15 @@ class PaymentListShimmer extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: 6,
-        separatorBuilder: (_, __) => const Divider(height: 1),
-        itemBuilder: (_, __) => Padding(
+        separatorBuilder: (_, _) => const Divider(height: 1),
+        itemBuilder: (_, _) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           child: Row(
             children: [
               Container(
                 width: 44,
                 height: 44,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.white,
                   borderRadius: AppSpacing.borderRadiusSM,
                 ),

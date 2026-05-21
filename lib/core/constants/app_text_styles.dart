@@ -35,6 +35,9 @@ abstract final class AppTextStyles {
   static TextStyle labelMedium = GoogleFonts.inter(
     fontSize: 12, fontWeight: FontWeight.w500, letterSpacing: 0.1,
   );
+  static TextStyle labelSmall = GoogleFonts.inter(
+  fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 0.1,
+);
   static TextStyle button = GoogleFonts.inter(
     fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.2,
   );

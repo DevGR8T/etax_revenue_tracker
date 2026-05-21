@@ -46,6 +46,7 @@ abstract final class AppStrings {
   static const String seeAll = 'See all';
   static const String payNow = 'Pay now';
   static const String tinCopied = 'TIN copied to clipboard';
+  static const String history = 'History';
 
   // ── Payments ───────────────────────────────────────────────
   static const String paymentHistory = 'Payment history';

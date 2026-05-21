@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:etax_revenue_tracker/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:etax_revenue_tracker/shared/widgets/main_shell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -76,22 +78,24 @@ GoRoute(
   builder: (context, _) => const _PlaceholderScreen(label: 'Pay Tax'),
 ),
 ShellRoute(
-  builder: (context, _, child) => _ShellPlaceholder(child: child),
+  builder: (context, _, child) => MainShell(child: child),
   routes: [
     GoRoute(
       path: RouteNames.dashboard,
-      builder: (context, _) => const _PlaceholderScreen(label: 'Dashboard'),
+      builder: (context, _) => const DashboardScreen(),
     ),
     GoRoute(
       path: RouteNames.history,
-      builder: (context, _) => const _PlaceholderScreen(label: 'History'),
+      builder: (context, _) =>
+          const _PlaceholderScreen(label: 'History'),
     ),
     GoRoute(
       path: RouteNames.profile,
-      builder: (context, _) => const _PlaceholderScreen(label: 'Profile'),
+      builder: (context, _) =>
+          const _PlaceholderScreen(label: 'Profile'),
     ),
-      ],
-    ),
+  ],
+),
   ],
 );
 
@@ -126,10 +130,4 @@ class _PlaceholderScreen extends StatelessWidget {
   }
 }
 
-class _ShellPlaceholder extends StatelessWidget {
-  const _ShellPlaceholder({required this.child});
-  final Widget child;
 
-  @override
-  Widget build(BuildContext context) => child;
-}

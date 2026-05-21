@@ -55,6 +55,16 @@ import 'package:etax_revenue_tracker/features/dashboard/domain/usecases/refresh_
     as _i184;
 import 'package:etax_revenue_tracker/features/dashboard/presentation/bloc/dashboard_bloc.dart'
     as _i959;
+import 'package:etax_revenue_tracker/features/payments/domain/repositories/payment_repository.dart'
+    as _i4;
+import 'package:etax_revenue_tracker/features/payments/domain/usecases/create_payment_usecase.dart'
+    as _i608;
+import 'package:etax_revenue_tracker/features/payments/domain/usecases/get_payment_detail_usecase.dart'
+    as _i917;
+import 'package:etax_revenue_tracker/features/payments/domain/usecases/get_payments_usecase.dart'
+    as _i130;
+import 'package:etax_revenue_tracker/features/payments/domain/usecases/search_payments_usecase.dart'
+    as _i930;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -85,6 +95,18 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i510.NetworkInfo>(
       () => _i510.NetworkInfoImpl(gh<_i895.Connectivity>()),
+    );
+    gh.factory<_i930.SearchPaymentsUseCase>(
+      () => _i930.SearchPaymentsUseCase(gh<_i4.PaymentRepository>()),
+    );
+    gh.factory<_i917.GetPaymentDetailUseCase>(
+      () => _i917.GetPaymentDetailUseCase(gh<_i4.PaymentRepository>()),
+    );
+    gh.factory<_i130.GetPaymentsUseCase>(
+      () => _i130.GetPaymentsUseCase(gh<_i4.PaymentRepository>()),
+    );
+    gh.factory<_i608.CreatePaymentUseCase>(
+      () => _i608.CreatePaymentUseCase(gh<_i4.PaymentRepository>()),
     );
     gh.lazySingleton<_i1061.AuthRemoteDataSource>(
       () => _i1061.AuthRemoteDataSourceImpl(

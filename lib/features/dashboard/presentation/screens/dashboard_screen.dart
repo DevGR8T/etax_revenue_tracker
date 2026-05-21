@@ -182,7 +182,7 @@ class _DashboardContent extends StatelessWidget {
           AppSpacing.gapLG,
 
           // Quick Actions
-          SectionHeader(title: 'Quick Actions'),
+          const SectionHeader(title: 'Quick Actions'),
           AppSpacing.gapSM,
           QuickActionsBar(
             onPayNow: () => context.go(RouteNames.payTax),
@@ -243,7 +243,7 @@ class _DashboardShimmer extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 100,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.white,
               borderRadius: AppSpacing.borderRadiusLG,
             ),
@@ -283,7 +283,7 @@ class _DashboardShimmer extends StatelessWidget {
                   Container(
                     width: 40,
                     height: 40,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.white,
                       borderRadius: AppSpacing.borderRadiusSM,
                     ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:etax_revenue_tracker/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:etax_revenue_tracker/features/payments/presentation/screens/payment_detail_screen.dart';
 import 'package:etax_revenue_tracker/features/payments/presentation/screens/payment_history_screen.dart';
 import 'package:etax_revenue_tracker/shared/widgets/main_shell.dart';
 import 'package:flutter/material.dart';
@@ -55,48 +56,53 @@ final GoRouter appRouter = GoRouter(
   refreshListenable: GoRouterRefreshStream(getIt<AuthBloc>().stream),
   routes: [
     GoRoute(
-  path: RouteNames.splash,
-  builder: (context, _) => const SplashScreen(),
-),
-GoRoute(
-  path: RouteNames.login,
-  builder: (context, _) => const LoginScreen(),
-),
-GoRoute(
-  path: RouteNames.register,
-  builder: (context, _) => const RegisterScreen(),
-),
-GoRoute(
-  path: RouteNames.forgotPassword,
-  builder: (context, _) => const ForgotPasswordScreen(),
-),
-GoRoute(
-  path: RouteNames.setPassword,
-  builder: (context, _) => const SetPasswordScreen(),
-),
-GoRoute(
-  path: RouteNames.payTax,
-  builder: (context, _) => const _PlaceholderScreen(label: 'Pay Tax'),
-),
-ShellRoute(
-  builder: (context, _, child) => MainShell(child: child),
-  routes: [
-    GoRoute(
-      path: RouteNames.dashboard,
-      builder: (context, _) => const DashboardScreen(),
+      path: RouteNames.splash,
+      builder: (context, _) => const SplashScreen(),
     ),
     GoRoute(
-      path: RouteNames.history,
-      builder: (context, _) =>
-          const PaymentHistoryScreen(),
+      path: RouteNames.login,
+      builder: (context, _) => const LoginScreen(),
     ),
     GoRoute(
-      path: RouteNames.profile,
-      builder: (context, _) =>
-          const _PlaceholderScreen(label: 'Profile'),
+      path: RouteNames.register,
+      builder: (context, _) => const RegisterScreen(),
     ),
-  ],
-),
+    GoRoute(
+      path: RouteNames.forgotPassword,
+      builder: (context, _) => const ForgotPasswordScreen(),
+    ),
+    GoRoute(
+      path: RouteNames.setPassword,
+      builder: (context, _) => const SetPasswordScreen(),
+    ),
+    GoRoute(
+      path: RouteNames.payTax,
+      builder: (context, _) => const _PlaceholderScreen(label: 'Pay Tax'),
+    ),
+    ShellRoute(
+      builder: (context, _, child) => MainShell(child: child),
+      routes: [
+        GoRoute(
+          path: RouteNames.dashboard,
+          builder: (context, _) => const DashboardScreen(),
+        ),
+        GoRoute(
+          path: RouteNames.history,
+          builder: (context, _) => const PaymentHistoryScreen(),
+        ),
+        GoRoute(
+          path: '/history/:id', // ← added
+          builder: (_, state) {
+            final id = state.pathParameters['id'] ?? '1';
+            return PaymentDetailScreen(productId: id);
+          },
+        ),
+        GoRoute(
+          path: RouteNames.profile,
+          builder: (context, _) => const _PlaceholderScreen(label: 'Profile'),
+        ),
+      ],
+    ),
   ],
 );
 
@@ -130,5 +136,3 @@ class _PlaceholderScreen extends StatelessWidget {
     );
   }
 }
-
-

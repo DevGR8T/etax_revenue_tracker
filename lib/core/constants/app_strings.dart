@@ -12,8 +12,7 @@ abstract final class AppStrings {
   static const String signUp = 'Sign up';
   static const String createAccount = 'Create account';
   static const String registerTitle = 'Create your account';
-  static const String registerSubtitle =
-      'Join millions of Nigerian taxpayers';
+  static const String registerSubtitle = 'Join millions of Nigerian taxpayers';
   static const String alreadyHaveAccount = 'Already have an account? ';
   static const String termsText = 'I agree to the ';
   static const String termsLink = 'Terms & Privacy Policy';
@@ -62,10 +61,13 @@ abstract final class AppStrings {
   static const String paymentPending = 'Payment pending';
   static const String paymentFailed = 'Payment failed';
   static const String receiptNumber = 'Receipt no.';
-  static const String issuingAuthority =
-      'Enugu State Internal Revenue Service';
+  static const String issuingAuthority = 'Enugu State Internal Revenue Service';
   static const String shareReceipt = 'Share receipt';
- 
+  static const String date = 'Date';
+  static const String levyType = 'Levy type';
+  static const String description = 'Description';
+  static const String taxId = 'Tax ID';
+  static const String issuedBy = 'Issued by';
 
   // ── Pay Tax ────────────────────────────────────────────────
   static const String payTax = 'Pay tax';
@@ -94,10 +96,8 @@ abstract final class AppStrings {
   static const String noInternetSubtitle =
       'Check your connection and try again';
   static const String retry = 'Retry';
-  static const String serverError =
-      'Server error. Please try again later.';
-  static const String sessionExpired =
-      'Session expired. Please login again.';
+  static const String serverError = 'Server error. Please try again later.';
+  static const String sessionExpired = 'Session expired. Please login again.';
 
   // ── Security ───────────────────────────────────────────────
   static const String deviceCompromised =
@@ -110,8 +110,7 @@ abstract final class AppStrings {
   // ── Validation ─────────────────────────────────────────────
   static const String fieldRequired = 'This field is required';
   static const String invalidEmail = 'Enter a valid email address';
-  static const String invalidPhone =
-      'Enter a valid Nigerian phone number';
+  static const String invalidPhone = 'Enter a valid Nigerian phone number';
   static const String passwordTooShort =
       'Password must be at least 8 characters';
   static const String passwordNoNumber =
@@ -121,15 +120,12 @@ abstract final class AppStrings {
   static const String passwordsDoNotMatch = 'Passwords do not match';
   static const String invalidAmount = 'Enter a valid amount';
   static const String amountTooLow = 'Amount must be greater than 0';
-  static const String amountTooHigh =
-      'Amount cannot exceed ₦10,000,000';
-  static const String acceptTerms =
-      'Please accept the terms to continue';
+  static const String amountTooHigh = 'Amount cannot exceed ₦10,000,000';
+  static const String acceptTerms = 'Please accept the terms to continue';
 
   // ── Offline ────────────────────────────────────────────────
   static const String offlineBanner = 'You are offline';
   static const String offlineBannerSubtitle =
       'Showing cached data. Connect to see latest updates.';
-  static const String cacheExpired =
-      'Data may be outdated. Pull to refresh.';
+  static const String cacheExpired = 'Data may be outdated. Pull to refresh.';
 }

@@ -3,6 +3,7 @@ import 'package:etax_revenue_tracker/features/auth/presentation/bloc/auth_bloc.d
 import 'package:etax_revenue_tracker/features/auth/presentation/bloc/auth_event.dart';
 import 'package:etax_revenue_tracker/features/auth/presentation/bloc/forgot_password_cubit.dart';
 import 'package:etax_revenue_tracker/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment_detail_bloc.dart';
 import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment_history_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,6 +71,9 @@ class EtaxApp extends StatelessWidget {
         BlocProvider<DashboardBloc>(create: (_) => getIt<DashboardBloc>()),
         BlocProvider<PaymentHistoryBloc>(
           create: (_) => getIt<PaymentHistoryBloc>(),
+        ),
+        BlocProvider<PaymentDetailBloc>(
+          create: (_) => getIt<PaymentDetailBloc>(),
         ),
       ],
       child: MaterialApp.router(

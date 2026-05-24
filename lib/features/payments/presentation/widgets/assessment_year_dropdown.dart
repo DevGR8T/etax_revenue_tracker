@@ -5,9 +5,10 @@ import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/constants/levy_types.dart';
 
-/// Dropdown for levy type selection.
-class LevyTypeDropdown extends StatelessWidget {
-  const LevyTypeDropdown({
+/// Dropdown for assessment year selection.
+/// Options: 2020 through current year.
+class AssessmentYearDropdown extends StatelessWidget {
+  const AssessmentYearDropdown({
     super.key,
     required this.value,
     required this.onChanged,
@@ -28,7 +29,7 @@ class LevyTypeDropdown extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Levy Type',
+          AppStrings.assessmentYear,
           style: AppTextStyles.labelLarge.copyWith(
             color: isDark
                 ? AppColors.textPrimaryDark
@@ -42,13 +43,13 @@ class LevyTypeDropdown extends StatelessWidget {
           isExpanded: true,
           decoration: const InputDecoration(),
           hint: Text(
-            AppStrings.selectLevyType,
+            AppStrings.selectYear,
             style: TextStyle(
               color: isDark ? AppColors.textHintDark : AppColors.textHintLight,
             ),
           ),
-          items: LevyTypes.all
-              .map((levy) => DropdownMenuItem(value: levy, child: Text(levy)))
+          items: LevyTypes.assessmentYears
+              .map((year) => DropdownMenuItem(value: year, child: Text(year)))
               .toList(),
           onChanged: enabled ? onChanged : null,
         ),

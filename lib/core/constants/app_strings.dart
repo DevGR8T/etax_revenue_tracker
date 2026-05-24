@@ -68,6 +68,8 @@ abstract final class AppStrings {
   static const String description = 'Description';
   static const String taxId = 'Tax ID';
   static const String issuedBy = 'Issued by';
+  static const String selectYear = 'Select year';
+  static const String payTaxSubtitle = 'Pay your taxes in a few easy steps';
 
   // ── Pay Tax ────────────────────────────────────────────────
   static const String payTax = 'Pay tax';

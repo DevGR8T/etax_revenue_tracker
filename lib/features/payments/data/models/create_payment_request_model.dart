@@ -15,7 +15,7 @@ class CreatePaymentRequestModel with _$CreatePaymentRequestModel {
     /// Maps amount → price
     required double price,
 
-    /// Maps assessmentYear → category
+    /// Maps levyType → category
     required String category,
 
     /// Maps notes → description

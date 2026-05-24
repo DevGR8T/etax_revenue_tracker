@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:etax_revenue_tracker/features/payments/data/models/payment_model.dart';
+import 'package:etax_revenue_tracker/features/payments/domain/entities/payment_status.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/errors/error_messages.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -21,10 +22,7 @@ import '../../domain/repositories/payment_repository.dart';
 /// ReceiptGenerator.tinFromUuid() generates the citizen TIN.
 @LazySingleton(as: PaymentRepository)
 class PaymentRepositoryImpl implements PaymentRepository {
-  const PaymentRepositoryImpl(
-    this._remoteDataSource,
-    this._supabaseService,
-  );
+  const PaymentRepositoryImpl(this._remoteDataSource, this._supabaseService);
 
   final PaymentRemoteDataSource _remoteDataSource;
   final SupabaseService _supabaseService;
@@ -122,12 +120,30 @@ class PaymentRepositoryImpl implements PaymentRepository {
       final requestModel = CreatePaymentRequestModel(
         title: params.levyType,
         price: params.amount,
-        category: params.assessmentYear,
-        description: params.notes ?? params.levyType,
+        category: params.levyType,
+        description: params.notes?.isNotEmpty == true
+            ? params.notes!
+            : 'No notes provided',
       );
 
-      final model = await _remoteDataSource.createPayment(requestModel);
-      return Right(model.toEntity(storedUserId: supabaseUserId));
+     final model = await _remoteDataSource.createPayment(requestModel);
+final baseEntity = model.toEntity(storedUserId: supabaseUserId);
+
+return Right(PaymentEntity(
+  id: baseEntity.id,
+  levyName: params.levyType,
+  levyType: params.levyType,
+  description: params.notes ?? '',
+  amount: params.amount,
+  formattedAmount: baseEntity.formattedAmount,
+  date: baseEntity.date,
+  formattedDate: baseEntity.formattedDate,
+  status: PaymentStatus.paid,
+  receiptNumber: baseEntity.receiptNumber,
+  taxId: baseEntity.taxId,
+  issuedBy: baseEntity.issuedBy,
+  thumbnailUrl: null,
+));
     } on NetworkException {
       return const Left(NetworkFailure());
     } on ServerException catch (e) {

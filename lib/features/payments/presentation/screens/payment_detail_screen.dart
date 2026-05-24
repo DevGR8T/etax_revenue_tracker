@@ -16,18 +16,18 @@ import '../widgets/receipt_skeleton.dart';
 class PaymentDetailScreen extends StatelessWidget {
   const PaymentDetailScreen({
     super.key,
-    required this.productId,
+    required this.paymentId,
   });
 
   /// Product id passed from GoRouter path parameter.
-  final String productId;
+  final String paymentId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<PaymentDetailBloc>()
         ..add(
-          LoadPaymentDetailEvent(id: int.tryParse(productId) ?? 1),
+          LoadPaymentDetailEvent(id: int.tryParse(paymentId) ?? 1),
         ),
       child: const _PaymentDetailView(),
     );

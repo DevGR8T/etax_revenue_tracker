@@ -85,7 +85,7 @@ extension PaymentModelX on PaymentModel {
     }
 
     return PaymentEntity(
-      id: id,
+      id: id.clamp(1, 194),
       levyName: title,
       levyType: category,
       description: description,

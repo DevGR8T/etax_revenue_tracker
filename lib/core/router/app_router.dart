@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:etax_revenue_tracker/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:etax_revenue_tracker/features/payments/domain/entities/payment_entity.dart';
+import 'package:etax_revenue_tracker/features/payments/presentation/screens/pay_tax_screen.dart';
 import 'package:etax_revenue_tracker/features/payments/presentation/screens/payment_detail_screen.dart';
 import 'package:etax_revenue_tracker/features/payments/presentation/screens/payment_history_screen.dart';
+import 'package:etax_revenue_tracker/features/payments/presentation/screens/payment_receipt_screen.dart';
 import 'package:etax_revenue_tracker/shared/widgets/main_shell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +37,7 @@ String? _authGuard(BuildContext context, GoRouterState state) {
       state.matchedLocation == RouteNames.history ||
       state.matchedLocation == RouteNames.profile ||
       state.matchedLocation == RouteNames.payTax ||
+      state.matchedLocation == RouteNames.paymentReceipt ||
       state.matchedLocation.startsWith('/history/');
 
   if (authState is AuthenticatedState &&
@@ -77,8 +81,15 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: RouteNames.payTax,
-      builder: (context, _) => const _PlaceholderScreen(label: 'Pay Tax'),
+      builder: (context, _) => const PayTaxScreen(),
     ),
+    GoRoute(
+  path: RouteNames.paymentReceipt,
+  builder: (_, state) {
+    final payment = state.extra as PaymentEntity;
+    return PaymentReceiptScreen(payment: payment);
+  },
+),
     ShellRoute(
       builder: (context, _, child) => MainShell(child: child),
       routes: [
@@ -94,7 +105,7 @@ final GoRouter appRouter = GoRouter(
           path: '/history/:id', // ← added
           builder: (_, state) {
             final id = state.pathParameters['id'] ?? '1';
-            return PaymentDetailScreen(productId: id);
+            return PaymentDetailScreen(paymentId: id);
           },
         ),
         GoRoute(

@@ -69,6 +69,8 @@ import 'package:etax_revenue_tracker/features/payments/domain/usecases/get_payme
     as _i130;
 import 'package:etax_revenue_tracker/features/payments/domain/usecases/search_payments_usecase.dart'
     as _i930;
+import 'package:etax_revenue_tracker/features/payments/presentation/bloc/pay_tax_bloc.dart'
+    as _i610;
 import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment_detail_bloc.dart'
     as _i1012;
 import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment_history_bloc.dart'
@@ -205,6 +207,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i130.GetPaymentsUseCase>(),
         gh<_i930.SearchPaymentsUseCase>(),
       ),
+    );
+    gh.factory<_i610.PayTaxBloc>(
+      () => _i610.PayTaxBloc(gh<_i608.CreatePaymentUseCase>()),
     );
     gh.factory<_i1012.PaymentDetailBloc>(
       () => _i1012.PaymentDetailBloc(gh<_i917.GetPaymentDetailUseCase>()),

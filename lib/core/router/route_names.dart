@@ -9,6 +9,7 @@ abstract final class RouteNames {
   static const String history = '/history';
   static const String paymentDetail = '/history/:id';
   static const String payTax = '/pay';
+  static const String paymentReceipt = '/payment-receipt';
   static const String profile = '/profile';
 
   static String paymentDetailPath(String id) => '/history/$id';

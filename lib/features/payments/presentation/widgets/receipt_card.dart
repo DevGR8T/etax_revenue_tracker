@@ -92,7 +92,7 @@ class ReceiptCard extends StatelessWidget {
                 const Divider(height: 1),
                 ReceiptRow(
                   label: AppStrings.description,
-                  value: payment.levyName,
+                  value: payment.description,
                 ),
                 const Divider(height: 1),
                 ReceiptRow(

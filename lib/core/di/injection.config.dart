@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:connectivity_plus/connectivity_plus.dart' as _i895;
 import 'package:dio/dio.dart' as _i361;
 import 'package:etax_revenue_tracker/core/di/injection.dart' as _i499;
@@ -75,10 +76,39 @@ import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment
     as _i1012;
 import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment_history_bloc.dart'
     as _i982;
+import 'package:etax_revenue_tracker/features/profile/data/datasources/notification_firestore_datasource.dart'
+    as _i93;
+import 'package:etax_revenue_tracker/features/profile/data/datasources/profile_local_datasource.dart'
+    as _i128;
+import 'package:etax_revenue_tracker/features/profile/data/datasources/profile_remote_datasource.dart'
+    as _i809;
+import 'package:etax_revenue_tracker/features/profile/data/repositories/notification_repository_impl.dart'
+    as _i840;
+import 'package:etax_revenue_tracker/features/profile/data/repositories/profile_repository_impl.dart'
+    as _i380;
+import 'package:etax_revenue_tracker/features/profile/domain/repositories/notification_repository.dart'
+    as _i710;
+import 'package:etax_revenue_tracker/features/profile/domain/repositories/profile_repository.dart'
+    as _i228;
+import 'package:etax_revenue_tracker/features/profile/domain/usecases/get_notifications_usecase.dart'
+    as _i676;
+import 'package:etax_revenue_tracker/features/profile/domain/usecases/get_profile_usecase.dart'
+    as _i133;
+import 'package:etax_revenue_tracker/features/profile/domain/usecases/get_unread_count_usecase.dart'
+    as _i451;
+import 'package:etax_revenue_tracker/features/profile/domain/usecases/mark_all_read_usecase.dart'
+    as _i25;
+import 'package:etax_revenue_tracker/features/profile/domain/usecases/mark_notification_read_usecase.dart'
+    as _i32;
+import 'package:etax_revenue_tracker/features/profile/domain/usecases/refresh_profile_usecase.dart'
+    as _i471;
+import 'package:etax_revenue_tracker/features/profile/domain/usecases/save_notification_usecase.dart'
+    as _i763;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:local_auth/local_auth.dart' as _i152;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -96,6 +126,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i152.LocalAuthentication>(() => externalModule.localAuth);
     gh.lazySingleton<_i291.DeviceSecurityService>(
       () => _i291.DeviceSecurityService(),
+    );
+    gh.lazySingleton<_i128.ProfileLocalDataSource>(
+      () => _i128.ProfileLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i816.BiometricService>(
       () => _i816.BiometricService(gh<_i152.LocalAuthentication>()),
@@ -117,6 +150,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i910.AuthLocalDataSource>(
       () => _i910.AuthLocalDataSourceImpl(gh<_i269.SupabaseService>()),
+    );
+    gh.lazySingleton<_i93.NotificationFirestoreDataSource>(
+      () => _i93.NotificationFirestoreDataSourceImpl(
+        gh<_i974.FirebaseFirestore>(),
+        gh<_i269.SupabaseService>(),
+      ),
     );
     gh.lazySingleton<_i956.AuthRepository>(
       () => _i98.AuthRepositoryImpl(
@@ -152,6 +191,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i510.NetworkInfo>(),
       ),
     );
+    gh.lazySingleton<_i710.NotificationRepository>(
+      () => _i840.NotificationRepositoryImpl(
+        gh<_i93.NotificationFirestoreDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i96.PaymentRemoteDataSource>(
       () => _i96.PaymentRemoteDataSourceImpl(
         gh<_i361.Dio>(instanceName: 'dummyjson'),
@@ -166,10 +210,32 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i956.AuthRepository>(),
       ),
     );
+    gh.factory<_i676.GetNotificationsUseCase>(
+      () => _i676.GetNotificationsUseCase(gh<_i710.NotificationRepository>()),
+    );
+    gh.factory<_i32.MarkNotificationReadUseCase>(
+      () =>
+          _i32.MarkNotificationReadUseCase(gh<_i710.NotificationRepository>()),
+    );
+    gh.factory<_i451.GetUnreadCountUseCase>(
+      () => _i451.GetUnreadCountUseCase(gh<_i710.NotificationRepository>()),
+    );
+    gh.factory<_i763.SaveNotificationUseCase>(
+      () => _i763.SaveNotificationUseCase(gh<_i710.NotificationRepository>()),
+    );
+    gh.factory<_i25.MarkAllReadUseCase>(
+      () => _i25.MarkAllReadUseCase(gh<_i710.NotificationRepository>()),
+    );
     gh.lazySingleton<_i519.DashboardRepository>(
       () => _i357.DashboardRepositoryImpl(
         gh<_i654.DashboardRemoteDataSource>(),
         gh<_i269.SupabaseService>(),
+      ),
+    );
+    gh.lazySingleton<_i809.ProfileRemoteDataSource>(
+      () => _i809.ProfileRemoteDataSourceImpl(
+        gh<_i361.Dio>(instanceName: 'dummyjson'),
+        gh<_i510.NetworkInfo>(),
       ),
     );
     gh.lazySingleton<_i4.PaymentRepository>(
@@ -210,6 +276,19 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i610.PayTaxBloc>(
       () => _i610.PayTaxBloc(gh<_i608.CreatePaymentUseCase>()),
+    );
+    gh.lazySingleton<_i228.ProfileRepository>(
+      () => _i380.ProfileRepositoryImpl(
+        gh<_i809.ProfileRemoteDataSource>(),
+        gh<_i128.ProfileLocalDataSource>(),
+        gh<_i269.SupabaseService>(),
+      ),
+    );
+    gh.factory<_i133.GetProfileUseCase>(
+      () => _i133.GetProfileUseCase(gh<_i228.ProfileRepository>()),
+    );
+    gh.factory<_i471.RefreshProfileUseCase>(
+      () => _i471.RefreshProfileUseCase(gh<_i228.ProfileRepository>()),
     );
     gh.factory<_i1012.PaymentDetailBloc>(
       () => _i1012.PaymentDetailBloc(gh<_i917.GetPaymentDetailUseCase>()),

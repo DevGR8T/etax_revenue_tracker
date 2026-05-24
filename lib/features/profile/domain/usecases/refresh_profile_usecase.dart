@@ -7,13 +7,13 @@ import '../entities/profile_entity.dart';
 import '../repositories/profile_repository.dart';
 
 @injectable
-class GetProfileUseCase extends UseCase<ProfileEntity, NoParams> {
-  const GetProfileUseCase(this._repository);
+class RefreshProfileUseCase extends UseCase<ProfileEntity, NoParams> {
+  const RefreshProfileUseCase(this._repository);
 
   final ProfileRepository _repository;
 
   @override
   Future<Either<Failure, ProfileEntity>> call(NoParams params) {
-    return _repository.getProfile();
+    return _repository.refreshProfile();
   }
 }

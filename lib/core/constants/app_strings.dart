@@ -70,7 +70,7 @@ abstract final class AppStrings {
   static const String issuedBy = 'Issued by';
   static const String selectYear = 'Select year';
   static const String payTaxSubtitle = 'Pay your taxes in a few easy steps';
-
+  static const String done = 'Done';
   // ── Pay Tax ────────────────────────────────────────────────
   static const String payTax = 'Pay tax';
   static const String selectLevyType = 'Select levy type';

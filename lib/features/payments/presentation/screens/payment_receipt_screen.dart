@@ -1,4 +1,6 @@
+import 'package:etax_revenue_tracker/core/router/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -33,6 +35,19 @@ class PaymentReceiptScreen extends StatelessWidget {
             AppSpacing.gapLG,
             ReceiptCard(payment: payment),
             AppSpacing.gapXL,
+            // Done button — takes user back to dashboard
+      Padding(
+        padding: AppSpacing.screenHorizontal,
+        child: SizedBox(
+          width: double.infinity,
+          height: 52,
+          child: ElevatedButton(
+            onPressed: () => context.go(RouteNames.dashboard),
+            child: const Text('Done'),
+          ),
+        ),
+      ),
+      AppSpacing.gapXL,
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:etax_revenue_tracker/features/profile/data/models/profile_model.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/errors/error_messages.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -48,7 +49,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
         _supabaseService.getUserEmail(),
       ]);
 
-      final model = results[0] as dynamic;
+      final model = results[0] as ProfileModel;
       final stateOfResidence = results[1] as String?;
       final supabaseUserId = results[2] as String?;
       final supabaseEmail = results[3] as String?;

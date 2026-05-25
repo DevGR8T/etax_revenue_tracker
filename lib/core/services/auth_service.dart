@@ -11,5 +11,7 @@ class AuthService {
 
   Future<bool> isLoggedIn() => _supabaseService.isLoggedIn();
 
+   Future<String?> getUserId() => _supabaseService.getUserId();
+
   Future<void> clearAll() => _supabaseService.clearSession();
 }

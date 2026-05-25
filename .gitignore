@@ -78,10 +78,10 @@ linux/flutter/generated_plugins.cmake
 *.iws
 .idea/
 
-# Firebase — never commit
+# Firebase —
 google-services.json
 GoogleService-Info.plist
-lib/firebase_options.dart
+
 
 # Environment — never commit secrets
 .env

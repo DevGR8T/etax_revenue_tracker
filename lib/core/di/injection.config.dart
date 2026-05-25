@@ -20,6 +20,8 @@ import 'package:etax_revenue_tracker/core/security/biometric_service.dart'
 import 'package:etax_revenue_tracker/core/security/security_service.dart'
     as _i291;
 import 'package:etax_revenue_tracker/core/services/auth_service.dart' as _i179;
+import 'package:etax_revenue_tracker/core/services/notification_service.dart'
+    as _i621;
 import 'package:etax_revenue_tracker/core/services/supabase_service.dart'
     as _i269;
 import 'package:etax_revenue_tracker/features/auth/data/datasources/auth_local_datasource.dart'
@@ -104,6 +106,13 @@ import 'package:etax_revenue_tracker/features/profile/domain/usecases/refresh_pr
     as _i471;
 import 'package:etax_revenue_tracker/features/profile/domain/usecases/save_notification_usecase.dart'
     as _i763;
+import 'package:etax_revenue_tracker/features/profile/presentation/bloc/notification_bloc.dart'
+    as _i685;
+import 'package:etax_revenue_tracker/features/profile/presentation/bloc/profile_bloc.dart'
+    as _i685;
+import 'package:firebase_messaging/firebase_messaging.dart' as _i892;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart'
+    as _i163;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -112,10 +121,10 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final externalModule = _$ExternalModule();
     final dioModule = _$DioModule();
@@ -124,6 +133,17 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i895.Connectivity>(() => externalModule.connectivity);
     gh.lazySingleton<_i152.LocalAuthentication>(() => externalModule.localAuth);
+    await gh.lazySingletonAsync<_i460.SharedPreferences>(
+      () => externalModule.sharedPreferences,
+      preResolve: true,
+    );
+    gh.lazySingleton<_i974.FirebaseFirestore>(() => externalModule.firestore);
+    gh.lazySingleton<_i892.FirebaseMessaging>(
+      () => externalModule.firebaseMessaging,
+    );
+    gh.lazySingleton<_i163.FlutterLocalNotificationsPlugin>(
+      () => externalModule.localNotifications,
+    );
     gh.lazySingleton<_i291.DeviceSecurityService>(
       () => _i291.DeviceSecurityService(),
     );
@@ -161,6 +181,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i98.AuthRepositoryImpl(
         gh<_i1061.AuthRemoteDataSource>(),
         gh<_i910.AuthLocalDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i621.NotificationService>(
+      () => _i621.NotificationService(
+        gh<_i892.FirebaseMessaging>(),
+        gh<_i163.FlutterLocalNotificationsPlugin>(),
+        gh<_i974.FirebaseFirestore>(),
+        gh<_i179.AuthService>(),
       ),
     );
     gh.factory<_i759.RegisterUseCase>(
@@ -202,7 +230,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i510.NetworkInfo>(),
       ),
     );
-    gh.factory<_i802.AuthBloc>(
+    gh.singleton<_i802.AuthBloc>(
       () => _i802.AuthBloc(
         gh<_i698.LoginUseCase>(),
         gh<_i759.RegisterUseCase>(),
@@ -284,11 +312,25 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i269.SupabaseService>(),
       ),
     );
+    gh.factory<_i685.NotificationBloc>(
+      () => _i685.NotificationBloc(
+        gh<_i676.GetNotificationsUseCase>(),
+        gh<_i32.MarkNotificationReadUseCase>(),
+        gh<_i25.MarkAllReadUseCase>(),
+        gh<_i451.GetUnreadCountUseCase>(),
+      ),
+    );
     gh.factory<_i133.GetProfileUseCase>(
       () => _i133.GetProfileUseCase(gh<_i228.ProfileRepository>()),
     );
     gh.factory<_i471.RefreshProfileUseCase>(
       () => _i471.RefreshProfileUseCase(gh<_i228.ProfileRepository>()),
+    );
+    gh.factory<_i685.ProfileBloc>(
+      () => _i685.ProfileBloc(
+        gh<_i133.GetProfileUseCase>(),
+        gh<_i471.RefreshProfileUseCase>(),
+      ),
     );
     gh.factory<_i1012.PaymentDetailBloc>(
       () => _i1012.PaymentDetailBloc(gh<_i917.GetPaymentDetailUseCase>()),

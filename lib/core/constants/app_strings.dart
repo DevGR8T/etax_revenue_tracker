@@ -91,6 +91,8 @@ abstract final class AppStrings {
   static const String noNotifications = 'No notifications yet';
   static const String noNotificationsSubtitle =
       'You\'ll see your tax alerts and updates here';
+  static const String logoutConfirm = 'Are you sure you want to logout?';
+  static const String cancel = 'Cancel';
 
   // ── Errors ─────────────────────────────────────────────────
   static const String somethingWentWrong = 'Something went wrong';

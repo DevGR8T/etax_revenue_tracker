@@ -32,6 +32,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+
   // Register background FCM handler
   FirebaseMessaging.onBackgroundMessage(
     firebaseMessagingBackgroundHandler,
@@ -53,6 +54,7 @@ Future<void> main() async {
 
     // Initialize notification service
   await getIt<NotificationService>().initialize();
+
 
   // Fire initial auth check after GetIt is ready
   getIt<AuthBloc>().add(const CheckAuthStatusEvent());

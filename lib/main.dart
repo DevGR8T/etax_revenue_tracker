@@ -7,6 +7,7 @@ import 'package:etax_revenue_tracker/features/dashboard/presentation/bloc/dashbo
 import 'package:etax_revenue_tracker/features/payments/presentation/bloc/pay_tax_bloc.dart';
 import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment_detail_bloc.dart';
 import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment_history_bloc.dart';
+import 'package:etax_revenue_tracker/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:etax_revenue_tracker/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -91,6 +92,7 @@ class EtaxApp extends StatelessWidget {
           create: (_) => getIt<PaymentDetailBloc>(),
         ),
         BlocProvider<PayTaxBloc>(create: (_) => getIt<PayTaxBloc>()),
+        BlocProvider<ProfileBloc>(create: (_) => getIt<ProfileBloc>()),
       ],
       child: MaterialApp.router(
         title: 'eTax Revenue Tracker',

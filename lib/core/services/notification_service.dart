@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import '../services/auth_service.dart';
@@ -66,7 +65,7 @@ class NotificationService {
     }
   }
 
-  /// Register FCM token in Firestore for this citizen.
+  /// Register FCM token in Firestore for this citizen. 
   /// Used by backend to send targeted notifications.
   Future<void> _registerToken(String token) async {
     try {

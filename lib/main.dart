@@ -1,3 +1,4 @@
+import 'package:etax_revenue_tracker/core/services/notification_service.dart';
 import 'package:etax_revenue_tracker/core/services/supabase_service.dart';
 import 'package:etax_revenue_tracker/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:etax_revenue_tracker/features/auth/presentation/bloc/auth_event.dart';
@@ -6,6 +7,9 @@ import 'package:etax_revenue_tracker/features/dashboard/presentation/bloc/dashbo
 import 'package:etax_revenue_tracker/features/payments/presentation/bloc/pay_tax_bloc.dart';
 import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment_detail_bloc.dart';
 import 'package:etax_revenue_tracker/features/payments/presentation/bloc/payment_history_bloc.dart';
+import 'package:etax_revenue_tracker/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -23,6 +27,19 @@ Future<void> main() async {
   // Load environment variables
   await dotenv.load(fileName: '.env');
 
+    // Initialize Firebase — must happen before GetIt setup
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Register background FCM handler
+  FirebaseMessaging.onBackgroundMessage(
+    firebaseMessagingBackgroundHandler,
+  );
+
+    // Initialise Supabase before GetIt
+  await SupabaseService.initialize();
+
   // Hydrated bloc — persists theme across restarts
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(
@@ -30,17 +47,12 @@ Future<void> main() async {
     ),
   );
 
-  // Firebase — uncomment on Day 12
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
-
-  // Initialise Supabase before GetIt
-
-  await SupabaseService.initialize();
 
   // Register all dependencies
   await setupGetIt();
+
+    // Initialize notification service
+  await getIt<NotificationService>().initialize();
 
   // Fire initial auth check after GetIt is ready
   getIt<AuthBloc>().add(const CheckAuthStatusEvent());

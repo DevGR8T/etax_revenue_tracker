@@ -6,6 +6,7 @@ import 'package:etax_revenue_tracker/features/payments/presentation/screens/pay_
 import 'package:etax_revenue_tracker/features/payments/presentation/screens/payment_detail_screen.dart';
 import 'package:etax_revenue_tracker/features/payments/presentation/screens/payment_history_screen.dart';
 import 'package:etax_revenue_tracker/features/payments/presentation/screens/payment_receipt_screen.dart';
+import 'package:etax_revenue_tracker/features/profile/presentation/screens/profile_screen.dart';
 import 'package:etax_revenue_tracker/shared/widgets/main_shell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -110,7 +111,7 @@ final GoRouter appRouter = GoRouter(
         ),
         GoRoute(
           path: RouteNames.profile,
-          builder: (context, _) => const _PlaceholderScreen(label: 'Profile'),
+          builder: (context, _) => const ProfileScreen()
         ),
       ],
     ),
@@ -133,17 +134,4 @@ class GoRouterRefreshStream extends ChangeNotifier {
   }
 }
 
-class _PlaceholderScreen extends StatelessWidget {
-  const _PlaceholderScreen({required this.label});
-  final String label;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(label)),
-      body: Center(
-        child: Text(label, style: Theme.of(context).textTheme.headlineMedium),
-      ),
-    );
-  }
-}

@@ -1,3 +1,5 @@
+import 'package:etax_revenue_tracker/core/di/injection.dart';
+import 'package:etax_revenue_tracker/core/services/notification_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/errors/failures.dart';
@@ -12,7 +14,7 @@ import 'auth_state.dart';
 
 /// Handles all authentication state.
 /// Calls UseCases only — never touches Supabase SDK directly.
-@injectable
+@singleton
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(
     this._loginUseCase,
@@ -63,19 +65,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  Future<void> _onLogout(
-    LogoutEvent event,
-    Emitter<AuthState> emit,
-  ) async {
-    emit(const AuthLoadingState());
+ Future<void> _onLogout(
+  LogoutEvent event,
+  Emitter<AuthState> emit,
+) async {
+  emit(const AuthLoadingState());
 
-    final result = await _logoutUseCase(const NoParams());
+  // Delete FCM token before clearing auth
+  await getIt<NotificationService>().deleteToken();
 
-    result.fold(
-      (failure) => emit(AuthErrorState(message: _mapFailureToMessage(failure))),
-      (_) => emit(const UnauthenticatedState()),
-    );
-  }
+  final result = await _logoutUseCase(const NoParams());
+
+  result.fold(
+    (failure) => emit(AuthErrorState(message: _mapFailureToMessage(failure))),
+    (_) => emit(const UnauthenticatedState()),
+  );
+}
 
   Future<void> _onCheckAuthStatus(
     CheckAuthStatusEvent event,

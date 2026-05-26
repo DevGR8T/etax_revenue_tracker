@@ -236,6 +236,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i759.RegisterUseCase>(),
         gh<_i457.LogoutUseCase>(),
         gh<_i956.AuthRepository>(),
+        gh<_i621.NotificationService>(),
       ),
     );
     gh.factory<_i676.GetNotificationsUseCase>(

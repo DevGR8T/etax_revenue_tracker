@@ -1,3 +1,4 @@
+import 'package:etax_revenue_tracker/core/constants/app_spacing.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
@@ -37,7 +38,7 @@ class PasswordStrengthBar extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 8),
+       AppSpacing.gapSM,
         Row(
           children: List.generate(3, (index) {
             return Expanded(
@@ -52,7 +53,7 @@ class PasswordStrengthBar extends StatelessWidget {
             );
           }),
         ),
-        const SizedBox(height: 4),
+        AppSpacing.gapXS,
         Text(
           label,
           style: AppTextStyles.caption.copyWith(color: color),

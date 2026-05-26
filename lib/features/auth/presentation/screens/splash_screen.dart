@@ -1,3 +1,4 @@
+import 'package:etax_revenue_tracker/core/constants/app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -117,7 +118,7 @@ class _SplashScreenState extends State<SplashScreen>
                     color: AppColors.white,
                   ),
                 ),
-                const SizedBox(height: 24),
+                 AppSpacing.gapLG,
                 Text(
                   AppStrings.appName,
                   style: AppTextStyles.h1.copyWith(
@@ -125,14 +126,14 @@ class _SplashScreenState extends State<SplashScreen>
                     letterSpacing: -0.5,
                   ),
                 ),
-                const SizedBox(height: 8),
+                 AppSpacing.gapSM,
                 Text(
                   AppStrings.appTagline,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.white.withValues(alpha: 0.7),
                   ),
                 ),
-                const SizedBox(height: 80),
+               AppSpacing.gapXXL,
                 SizedBox(
                   width: 200,
                   child: LinearProgressIndicator(

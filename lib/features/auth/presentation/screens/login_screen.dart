@@ -1,3 +1,4 @@
+import 'package:etax_revenue_tracker/shared/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -19,13 +20,7 @@ class LoginScreen extends StatelessWidget {
           context.go(RouteNames.dashboard);
         }
         if (state is AuthErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: AppColors.error,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+        AppSnackbar.showError(context, state.message);
         }
       },
       builder: (context, state) {

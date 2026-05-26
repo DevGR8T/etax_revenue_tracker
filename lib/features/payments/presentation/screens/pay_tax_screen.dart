@@ -1,3 +1,4 @@
+import 'package:etax_revenue_tracker/shared/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,13 +109,7 @@ class _PayTaxViewState extends State<_PayTaxView> {
     return BlocConsumer<PayTaxBloc, PayTaxState>(
       listener: (context, state) {
         if (state is PayTaxErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: AppColors.error,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+         AppSnackbar.showError(context, state.message);
         }
 
         // Show success dialog exactly once

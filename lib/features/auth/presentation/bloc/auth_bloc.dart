@@ -1,4 +1,4 @@
-import 'package:etax_revenue_tracker/core/di/injection.dart';
+
 import 'package:etax_revenue_tracker/core/services/notification_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -21,6 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     this._registerUseCase,
     this._logoutUseCase,
     this._authRepository,
+     this._notificationService,
   ) : super(const AuthInitialState()) {
     on<LoginEvent>(_onLogin);
     on<RegisterEvent>(_onRegister);
@@ -32,6 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final RegisterUseCase _registerUseCase;
   final LogoutUseCase _logoutUseCase;
   final AuthRepository _authRepository;
+  final NotificationService _notificationService;
 
   Future<void> _onLogin(
     LoginEvent event,
@@ -72,7 +74,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   emit(const AuthLoadingState());
 
   // Delete FCM token before clearing auth
-  await getIt<NotificationService>().deleteToken();
+  await _notificationService.deleteToken();
 
   final result = await _logoutUseCase(const NoParams());
 

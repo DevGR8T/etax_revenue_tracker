@@ -1,3 +1,4 @@
+import 'package:etax_revenue_tracker/shared/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
@@ -80,13 +81,7 @@ class PaymentSuccessDialog extends StatelessWidget {
           ),
         ),
         AppSpacing.gapXS,
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: onViewReceipt,
-            child: const Text(AppStrings.viewReceipt),
-          ),
-        ),
+        PrimaryButton(label: AppStrings.viewReceipt, onPressed: onViewReceipt),
       ],
       actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
     );

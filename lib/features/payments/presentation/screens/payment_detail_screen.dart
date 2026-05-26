@@ -1,3 +1,4 @@
+import 'package:etax_revenue_tracker/shared/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
@@ -14,10 +15,7 @@ import '../widgets/receipt_card.dart';
 import '../widgets/receipt_skeleton.dart';
 
 class PaymentDetailScreen extends StatelessWidget {
-  const PaymentDetailScreen({
-    super.key,
-    required this.paymentId,
-  });
+  const PaymentDetailScreen({super.key, required this.paymentId});
 
   /// Product id passed from GoRouter path parameter.
   final String paymentId;
@@ -25,10 +23,9 @@ class PaymentDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<PaymentDetailBloc>()
-        ..add(
-          LoadPaymentDetailEvent(id: int.tryParse(paymentId) ?? 1),
-        ),
+      create: (_) =>
+          getIt<PaymentDetailBloc>()
+            ..add(LoadPaymentDetailEvent(id: int.tryParse(paymentId) ?? 1)),
       child: const _PaymentDetailView(),
     );
   }
@@ -61,24 +58,25 @@ class _PaymentDetailView extends StatelessWidget {
         builder: (context, state) {
           return switch (state) {
             PaymentDetailLoadingState() => const SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: 24),
-                    ReceiptSkeleton(),
-                    SizedBox(height: 80),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  SizedBox(height: 24),
+                  ReceiptSkeleton(),
+                  SizedBox(height: 80),
+                ],
               ),
+            ),
 
-            PaymentDetailLoadedState(:final payment) =>
-              _LoadedBody(payment: payment),
+            PaymentDetailLoadedState(:final payment) => _LoadedBody(
+              payment: payment,
+            ),
 
             PaymentDetailErrorState(:final message, :final id) =>
               AppErrorWidget(
                 message: message,
-                onRetry: () => context
-                    .read<PaymentDetailBloc>()
-                    .add(LoadPaymentDetailEvent(id: id)),
+                onRetry: () => context.read<PaymentDetailBloc>().add(
+                  LoadPaymentDetailEvent(id: id),
+                ),
               ),
 
             _ => const SizedBox.shrink(),
@@ -113,17 +111,10 @@ class _LoadedBody extends StatelessWidget {
           // Share button — full width at bottom
           Padding(
             padding: AppSpacing.screenHorizontal,
-            child: SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: ElevatedButton.icon(
-                onPressed: () => _onShare(),
-                icon: const Icon(Icons.share_outlined, size: 18),
-                label: Text(
-                  AppStrings.shareReceipt,
-                  style: AppTextStyles.button,
-                ),
-              ),
+            child: PrimaryButton(
+              label: AppStrings.shareReceipt,
+              icon: Icons.share_outlined,
+              onPressed: _onShare,
             ),
           ),
           AppSpacing.gapXL,
@@ -140,7 +131,8 @@ class _LoadedBody extends StatelessWidget {
 
 // ── Shared helper ────────────────────────────────────────────────
 
-String _buildReceiptText(PaymentEntity payment) => '''
+String _buildReceiptText(PaymentEntity payment) =>
+    '''
 eTax Revenue Tracker — Payment Receipt
 
 Receipt No: ${payment.receiptNumber}

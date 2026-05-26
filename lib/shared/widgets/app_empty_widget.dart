@@ -1,3 +1,4 @@
+import 'package:etax_revenue_tracker/shared/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_spacing.dart';
@@ -33,9 +34,7 @@ class AppEmptyWidget extends StatelessWidget {
             AppSpacing.gapMD,
             Text(
               message,
-              style: AppTextStyles.h4.copyWith(
-                color: AppColors.grey500,
-              ),
+              style: AppTextStyles.h4.copyWith(color: AppColors.grey500),
               textAlign: TextAlign.center,
             ),
             if (subtitle != null) ...[
@@ -50,12 +49,10 @@ class AppEmptyWidget extends StatelessWidget {
             ],
             if (actionLabel != null && onAction != null) ...[
               AppSpacing.gapLG,
-              SizedBox(
+              PrimaryButton(
+                label: actionLabel!,
+                onPressed: onAction,
                 width: 200,
-                child: ElevatedButton(
-                  onPressed: onAction,
-                  child: Text(actionLabel!),
-                ),
               ),
             ],
           ],

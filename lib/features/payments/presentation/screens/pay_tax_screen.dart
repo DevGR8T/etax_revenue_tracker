@@ -1,4 +1,5 @@
 import 'package:etax_revenue_tracker/shared/widgets/app_snackbar.dart';
+import 'package:etax_revenue_tracker/shared/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,7 +110,7 @@ class _PayTaxViewState extends State<_PayTaxView> {
     return BlocConsumer<PayTaxBloc, PayTaxState>(
       listener: (context, state) {
         if (state is PayTaxErrorState) {
-         AppSnackbar.showError(context, state.message);
+          AppSnackbar.showError(context, state.message);
         }
 
         // Show success dialog exactly once
@@ -217,7 +218,11 @@ class _PayTaxViewState extends State<_PayTaxView> {
                   AppSpacing.gapXL,
 
                   // Make Payment button
-                  _SubmitButton(isLoading: isLoading, onPressed: _onSubmit),
+                  PrimaryButton(
+                    label: AppStrings.makePayment,
+                    isLoading: isLoading,
+                    onPressed: _onSubmit,
+                  ),
                   AppSpacing.gapXL,
                 ],
               ),
@@ -280,36 +285,6 @@ class _AmountField extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-// ── Submit button ────────────────────────────────────────────────
-
-class _SubmitButton extends StatelessWidget {
-  const _SubmitButton({required this.isLoading, required this.onPressed});
-
-  final bool isLoading;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 52,
-      child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
-        child: isLoading
-            ? const SizedBox(
-                width: 22,
-                height: 22,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.5,
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
-                ),
-              )
-            : Text(AppStrings.makePayment, style: AppTextStyles.button),
-      ),
     );
   }
 }

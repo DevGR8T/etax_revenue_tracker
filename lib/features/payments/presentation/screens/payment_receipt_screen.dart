@@ -1,4 +1,5 @@
 import 'package:etax_revenue_tracker/core/router/route_names.dart';
+import 'package:etax_revenue_tracker/shared/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
@@ -36,25 +37,22 @@ class PaymentReceiptScreen extends StatelessWidget {
             ReceiptCard(payment: payment),
             AppSpacing.gapXL,
             // Done button — takes user back to dashboard
-      Padding(
-        padding: AppSpacing.screenHorizontal,
-        child: SizedBox(
-          width: double.infinity,
-          height: 52,
-          child: ElevatedButton(
-            onPressed: () => context.go(RouteNames.dashboard),
-            child: const Text('Done'),
-          ),
-        ),
-      ),
-      AppSpacing.gapXL,
+            Padding(
+              padding: AppSpacing.screenHorizontal,
+              child: PrimaryButton(
+                label: 'Done',
+                onPressed: () => context.go(RouteNames.dashboard),
+              ),
+            ),
+            AppSpacing.gapXL,
           ],
         ),
       ),
     );
   }
 
-  String _receiptText(PaymentEntity payment) => '''
+  String _receiptText(PaymentEntity payment) =>
+      '''
 eTax Revenue Tracker — Payment Receipt
 
 Receipt No: ${payment.receiptNumber}
